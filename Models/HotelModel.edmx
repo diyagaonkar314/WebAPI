@@ -1,0 +1,422 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="HotelDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="Aname" />
+          </Key>
+          <Property Name="Aname" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Apass" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Cid" />
+          </Key>
+          <Property Name="Cid" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Cname" Type="varchar" MaxLength="20" />
+          <Property Name="Cemail" Type="varchar" MaxLength="20" />
+          <Property Name="Cphone" Type="bigint" />
+          <Property Name="Ccity" Type="varchar" MaxLength="50" />
+          <Property Name="Cdob" Type="date" />
+          <Property Name="Cpincode" Type="int" />
+          <Property Name="Cnation" Type="varchar" MaxLength="15" />
+          <Property Name="Cgen" Type="varchar" MaxLength="10" />
+          <Property Name="Cpass" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Eid" />
+          </Key>
+          <Property Name="Eid" Type="int" Nullable="false" />
+          <Property Name="Ename" Type="varchar" MaxLength="20" />
+          <Property Name="Eservice" Type="varchar" MaxLength="20" />
+          <Property Name="Eshift" Type="varchar" MaxLength="20" />
+          <Property Name="Erole" Type="varchar" MaxLength="20" />
+          <Property Name="Salary" Type="int" />
+        </EntityType>
+        <EntityType Name="Food">
+          <Key>
+            <PropertyRef Name="Fid" />
+          </Key>
+          <Property Name="Fid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fname" Type="varchar" MaxLength="20" />
+          <Property Name="Fprice" Type="int" />
+        </EntityType>
+        <EntityType Name="FoodBook">
+          <Key>
+            <PropertyRef Name="FBookid" />
+          </Key>
+          <Property Name="FBookid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cid" Type="varchar" MaxLength="20" />
+          <Property Name="Fid" Type="int" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Fprice" Type="int" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="Rid" />
+          </Key>
+          <Property Name="Rid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Rtype" Type="varchar" MaxLength="20" />
+          <Property Name="Rstatus" Type="varchar" MaxLength="20" />
+          <Property Name="Rprice" Type="int" />
+        </EntityType>
+        <EntityType Name="RoomBook">
+          <Key>
+            <PropertyRef Name="RBookid" />
+          </Key>
+          <Property Name="RBookid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cid" Type="varchar" MaxLength="20" />
+          <Property Name="Rid" Type="int" />
+          <Property Name="Dfrom" Type="date" />
+          <Property Name="Tfrom" Type="date" />
+          <Property Name="Rtype" Type="varchar" MaxLength="20" />
+          <Property Name="Rprice" Type="int" />
+          <Property Name="Pcount" Type="int" />
+        </EntityType>
+        <Association Name="FK__FoodBook__Cid__276EDEB3">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="FoodBook" Type="Self.FoodBook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Cid" />
+            </Principal>
+            <Dependent Role="FoodBook">
+              <PropertyRef Name="Cid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FoodBook__Fid__286302EC">
+          <End Role="Food" Type="Self.Food" Multiplicity="0..1" />
+          <End Role="FoodBook" Type="Self.FoodBook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Food">
+              <PropertyRef Name="Fid" />
+            </Principal>
+            <Dependent Role="FoodBook">
+              <PropertyRef Name="Fid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RoomBook__Cid__239E4DCF">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="RoomBook" Type="Self.RoomBook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Cid" />
+            </Principal>
+            <Dependent Role="RoomBook">
+              <PropertyRef Name="Cid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RoomBook__Rid__24927208">
+          <End Role="Room" Type="Self.Room" Multiplicity="0..1" />
+          <End Role="RoomBook" Type="Self.RoomBook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="Rid" />
+            </Principal>
+            <Dependent Role="RoomBook">
+              <PropertyRef Name="Rid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HotelDBModelStoreContainer">
+          <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Food" EntityType="Self.Food" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FoodBook" EntityType="Self.FoodBook" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoomBook" EntityType="Self.RoomBook" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__FoodBook__Cid__276EDEB3" Association="Self.FK__FoodBook__Cid__276EDEB3">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="FoodBook" EntitySet="FoodBook" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FoodBook__Fid__286302EC" Association="Self.FK__FoodBook__Fid__286302EC">
+            <End Role="Food" EntitySet="Food" />
+            <End Role="FoodBook" EntitySet="FoodBook" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RoomBook__Cid__239E4DCF" Association="Self.FK__RoomBook__Cid__239E4DCF">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="RoomBook" EntitySet="RoomBook" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RoomBook__Rid__24927208" Association="Self.FK__RoomBook__Rid__24927208">
+            <End Role="Room" EntitySet="Room" />
+            <End Role="RoomBook" EntitySet="RoomBook" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HotelDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="Aname" />
+          </Key>
+          <Property Name="Aname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Apass" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Cid" />
+          </Key>
+          <Property Name="Cid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Cname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Cemail" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Cphone" Type="Int64" />
+          <Property Name="Ccity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Cdob" Type="DateTime" Precision="0" />
+          <Property Name="Cpincode" Type="Int32" />
+          <Property Name="Cnation" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Cgen" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Cpass" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="FoodBooks" Relationship="Self.FK__FoodBook__Cid__276EDEB3" FromRole="Customer" ToRole="FoodBook" />
+          <NavigationProperty Name="RoomBooks" Relationship="Self.FK__RoomBook__Cid__239E4DCF" FromRole="Customer" ToRole="RoomBook" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Eid" />
+          </Key>
+          <Property Name="Eid" Type="Int32" Nullable="false" />
+          <Property Name="Ename" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Eservice" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Eshift" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Erole" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Salary" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Food">
+          <Key>
+            <PropertyRef Name="Fid" />
+          </Key>
+          <Property Name="Fid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fprice" Type="Int32" />
+          <NavigationProperty Name="FoodBooks" Relationship="Self.FK__FoodBook__Fid__286302EC" FromRole="Food" ToRole="FoodBook" />
+        </EntityType>
+        <EntityType Name="FoodBook">
+          <Key>
+            <PropertyRef Name="FBookid" />
+          </Key>
+          <Property Name="FBookid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fid" Type="Int32" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Fprice" Type="Int32" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__FoodBook__Cid__276EDEB3" FromRole="FoodBook" ToRole="Customer" />
+          <NavigationProperty Name="Food" Relationship="Self.FK__FoodBook__Fid__286302EC" FromRole="FoodBook" ToRole="Food" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="Rid" />
+          </Key>
+          <Property Name="Rid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Rtype" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Rstatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Rprice" Type="Int32" />
+          <NavigationProperty Name="RoomBooks" Relationship="Self.FK__RoomBook__Rid__24927208" FromRole="Room" ToRole="RoomBook" />
+        </EntityType>
+        <EntityType Name="RoomBook">
+          <Key>
+            <PropertyRef Name="RBookid" />
+          </Key>
+          <Property Name="RBookid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Rid" Type="Int32" />
+          <Property Name="Dfrom" Type="DateTime" Precision="0" />
+          <Property Name="Tfrom" Type="DateTime" Precision="0" />
+          <Property Name="Rtype" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Rprice" Type="Int32" />
+          <Property Name="Pcount" Type="Int32" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__RoomBook__Cid__239E4DCF" FromRole="RoomBook" ToRole="Customer" />
+          <NavigationProperty Name="Room" Relationship="Self.FK__RoomBook__Rid__24927208" FromRole="RoomBook" ToRole="Room" />
+        </EntityType>
+        <Association Name="FK__FoodBook__Cid__276EDEB3">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="FoodBook" Type="Self.FoodBook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Cid" />
+            </Principal>
+            <Dependent Role="FoodBook">
+              <PropertyRef Name="Cid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RoomBook__Cid__239E4DCF">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="RoomBook" Type="Self.RoomBook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Cid" />
+            </Principal>
+            <Dependent Role="RoomBook">
+              <PropertyRef Name="Cid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FoodBook__Fid__286302EC">
+          <End Role="Food" Type="Self.Food" Multiplicity="0..1" />
+          <End Role="FoodBook" Type="Self.FoodBook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Food">
+              <PropertyRef Name="Fid" />
+            </Principal>
+            <Dependent Role="FoodBook">
+              <PropertyRef Name="Fid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RoomBook__Rid__24927208">
+          <End Role="Room" Type="Self.Room" Multiplicity="0..1" />
+          <End Role="RoomBook" Type="Self.RoomBook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="Rid" />
+            </Principal>
+            <Dependent Role="RoomBook">
+              <PropertyRef Name="Rid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HotelDBEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Admins" EntityType="Self.Admin" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Foods" EntityType="Self.Food" />
+          <EntitySet Name="FoodBooks" EntityType="Self.FoodBook" />
+          <EntitySet Name="Rooms" EntityType="Self.Room" />
+          <EntitySet Name="RoomBooks" EntityType="Self.RoomBook" />
+          <AssociationSet Name="FK__FoodBook__Cid__276EDEB3" Association="Self.FK__FoodBook__Cid__276EDEB3">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="FoodBook" EntitySet="FoodBooks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RoomBook__Cid__239E4DCF" Association="Self.FK__RoomBook__Cid__239E4DCF">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="RoomBook" EntitySet="RoomBooks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FoodBook__Fid__286302EC" Association="Self.FK__FoodBook__Fid__286302EC">
+            <End Role="Food" EntitySet="Foods" />
+            <End Role="FoodBook" EntitySet="FoodBooks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RoomBook__Rid__24927208" Association="Self.FK__RoomBook__Rid__24927208">
+            <End Role="Room" EntitySet="Rooms" />
+            <End Role="RoomBook" EntitySet="RoomBooks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HotelDBModelStoreContainer" CdmEntityContainer="HotelDBEntities1">
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="HotelDBModel.Admin">
+              <MappingFragment StoreEntitySet="Admin">
+                <ScalarProperty Name="Aname" ColumnName="Aname" />
+                <ScalarProperty Name="Apass" ColumnName="Apass" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="HotelDBModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="Cid" ColumnName="Cid" />
+                <ScalarProperty Name="Cname" ColumnName="Cname" />
+                <ScalarProperty Name="Cemail" ColumnName="Cemail" />
+                <ScalarProperty Name="Cphone" ColumnName="Cphone" />
+                <ScalarProperty Name="Ccity" ColumnName="Ccity" />
+                <ScalarProperty Name="Cdob" ColumnName="Cdob" />
+                <ScalarProperty Name="Cpincode" ColumnName="Cpincode" />
+                <ScalarProperty Name="Cnation" ColumnName="Cnation" />
+                <ScalarProperty Name="Cgen" ColumnName="Cgen" />
+                <ScalarProperty Name="Cpass" ColumnName="Cpass" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="HotelDBModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Eid" ColumnName="Eid" />
+                <ScalarProperty Name="Ename" ColumnName="Ename" />
+                <ScalarProperty Name="Eservice" ColumnName="Eservice" />
+                <ScalarProperty Name="Eshift" ColumnName="Eshift" />
+                <ScalarProperty Name="Erole" ColumnName="Erole" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Foods">
+            <EntityTypeMapping TypeName="HotelDBModel.Food">
+              <MappingFragment StoreEntitySet="Food">
+                <ScalarProperty Name="Fid" ColumnName="Fid" />
+                <ScalarProperty Name="Fname" ColumnName="Fname" />
+                <ScalarProperty Name="Fprice" ColumnName="Fprice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FoodBooks">
+            <EntityTypeMapping TypeName="HotelDBModel.FoodBook">
+              <MappingFragment StoreEntitySet="FoodBook">
+                <ScalarProperty Name="FBookid" ColumnName="FBookid" />
+                <ScalarProperty Name="Cid" ColumnName="Cid" />
+                <ScalarProperty Name="Fid" ColumnName="Fid" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Fprice" ColumnName="Fprice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rooms">
+            <EntityTypeMapping TypeName="HotelDBModel.Room">
+              <MappingFragment StoreEntitySet="Room">
+                <ScalarProperty Name="Rid" ColumnName="Rid" />
+                <ScalarProperty Name="Rtype" ColumnName="Rtype" />
+                <ScalarProperty Name="Rstatus" ColumnName="Rstatus" />
+                <ScalarProperty Name="Rprice" ColumnName="Rprice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoomBooks">
+            <EntityTypeMapping TypeName="HotelDBModel.RoomBook">
+              <MappingFragment StoreEntitySet="RoomBook">
+                <ScalarProperty Name="RBookid" ColumnName="RBookid" />
+                <ScalarProperty Name="Cid" ColumnName="Cid" />
+                <ScalarProperty Name="Rid" ColumnName="Rid" />
+                <ScalarProperty Name="Dfrom" ColumnName="Dfrom" />
+                <ScalarProperty Name="Tfrom" ColumnName="Tfrom" />
+                <ScalarProperty Name="Rtype" ColumnName="Rtype" />
+                <ScalarProperty Name="Rprice" ColumnName="Rprice" />
+                <ScalarProperty Name="Pcount" ColumnName="Pcount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
